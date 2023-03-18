@@ -1,0 +1,54 @@
+from news.models import *
+Author.objects.create(author_user=User.objects.create_user('Aleksandr'))
+Author.objects.create(author_user=User.objects.create_user('Pavel'))
+Category.objects.create(name='Tech')
+Category.objects.create(name='Sport')
+Category.objects.create(name='Society')
+Category.objects.create(name='Travel')
+AuthorFirst=Author.objects.get(author_user=User.objects.get(username='Aleksandr'))
+AuthorSecond=Author.objects.get(author_user=User.objects.get(username='Pavel'))
+Post.objects.create(author=AuthorFirst, categoryType='AR', title='Iphone 14 Pro', text='Dynamic Island...')
+Post.objects.create(author=AuthorFirst, categoryType='AR', title='AI helps soccer', text='AI reached new goals...')
+Post.objects.create(author=AuthorSecond, categoryType='NW', title='Random News', text='Random news text...')
+Post.objects.get(id=1).postCategory.add(Category.objects.get(name='Tech'))
+Post.objects.get(id=2).postCategory.add(Category.objects.get(name='Tech'))
+Post.objects.get(id=2).postCategory.add(Category.objects.get(name='Sport'))
+Post.objects.get(id=3).postCategory.add(Category.objects.get(name='Travel'))
+Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=User.objects.get(username='Pavel'), commentText='Cool Article')
+Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=User.objects.get(username='Pavel'), commentText='Rocket Soccer = Rocket Science :)')
+Comment.objects.create(commentPost=Post.objects.get(id=3), commentUser=User.objects.get(username='Aleksandr'), commentText='Random comment')
+Comment.objects.create(commentPost=Post.objects.get(id=3), commentUser=User.objects.get(username='Pavel'), commentText='Random comment from Author')
+Post.objects.get(id=1).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=3).dislike()
+Post.objects.get(id=3).dislike()
+Post.objects.get(id=3).dislike()
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=2).like()
+Comment.objects.get(id=3).like()
+Comment.objects.get(id=4).dislike()
+Comment.objects.get(id=4).dislike()
+Author.objects.get(author_user=User.objects.get(username='Aleksandr')).update_rating()
+Author.objects.get(author_user=User.objects.get(username='Pavel')).update_rating()
+top=Author.objects.order_by('-ratingAuthor')
+top[0].author_user.username
+top[0].ratingAuthor
+TopAR=Post.objects.filter(categoryType='AR').order_by('-postRating')
+print('дата публикации: ' + TopAR[0].createDate.strftime("%Y-%m-%d %H:%M:%S"),
+' автор: ' + TopAR[0].author.author_user.username,
+'рейтинг: ' + str(TopAR[0].postRating),
+'Название: ' + TopAR[0].title,
+'Превью: ' + TopAR[0].preview())
+for i in Comment.objects.filter(commentPost=TopAR[0].id).values("commentText"):
+    i.values()
+
+
+
+
+
+
+
+
+
