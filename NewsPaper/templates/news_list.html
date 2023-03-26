@@ -1,5 +1,5 @@
 {% extends 'flatpages/default.html' %}
-
+{% load my_filters %}
 
 {% block title %}
 News
@@ -23,9 +23,9 @@ News
 
            {% for news_copy in news %}
            <tr>
-               <td>{{ news_copy.title }}</td>
+               <td>{{ news_copy.title|censor }}</td>
                <td>{{ news_copy.createDate|date:'d M Y' }}</td>
-               <td>{{ news_copy.text|truncatewords:20 }}</td>
+               <td>{{ news_copy.text|truncatewords:20|censor }}</td>
            </tr>
            {% endfor %}
 
