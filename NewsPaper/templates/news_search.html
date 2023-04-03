@@ -1,0 +1,40 @@
+{% extends 'flatpages/default.html' %}
+{% load my_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+
+{% block content %}
+   <h1><span style="text-decoration: underline;"><strong>ПОИСК НОВОСТЕЙ</strong></span></h1>
+
+  <form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+   </form>
+   <h3>Найдено новостей: {{ news|length }}</h3>
+
+   <hr>
+   {% if news %}
+       <table style="margin-left: auto; margin-right: auto;">
+           <tr>
+               <td>Заголовок</td>
+               <td>Дата публикации</td>
+               <td>Новость</td>
+           </tr>
+
+           {% for news_copy in news %}
+           <tr>
+               <td>{{ news_copy.title|censor }}</td>
+               <td>{{ news_copy.createDate|date:'d M Y' }}</td>
+               <td>{{ news_copy.text|truncatewords:20|censor }}</td>
+           </tr>
+           {% endfor %}
+
+       </table>
+   {% else %}
+       <h2>Новости не найдены!</h2>
+   {% endif %}
+
+{% endblock content %}
