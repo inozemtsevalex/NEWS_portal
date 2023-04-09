@@ -17,6 +17,9 @@ News
                <td>Заголовок</td>
                <td>Дата публикации</td>
                <td>Новость</td>
+               {% if perms.news.change_post or perms.news.delete_post %}
+               <td>Действия</td>
+               {% endif %}
            </tr>
 
            {% for news_copy in news %}
@@ -24,6 +27,18 @@ News
                <td>{{ news_copy.title|censor }}</td>
                <td>{{ news_copy.createDate|date:'d M Y' }}</td>
                <td>{{ news_copy.text|truncatewords:20|censor }}</td>
+
+               <td>
+                    {% if perms.news.change_post %}
+                    <a href="{% url 'post_edit' pk=news_copy.id %}">Изменить</a>
+                    {% endif %}
+                    {% if perms.news.delete_post %}
+                    <a href="{% url 'post_delete' pk=news_copy.id %}">Удалить</a>
+                    {% endif %}
+                </td>
+
+
+
            </tr>
            {% endfor %}
 
