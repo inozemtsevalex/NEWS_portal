@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .filters import PostFilter
@@ -45,8 +44,8 @@ class SearchNews(ListView):
         return context
 
 
-class PostCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
-    permission_required = ('news.add_Post',)
+class PostCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     raise_exception = True
     form_class = PostForm
     model = Post
@@ -70,3 +69,4 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
     model = Post
     template_name = 'news_delete.html'
     success_url = reverse_lazy('news_list')
+
