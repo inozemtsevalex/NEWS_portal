@@ -7,6 +7,10 @@ from datetime import datetime
 from .forms import PostForm
 from django.urls import reverse_lazy
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class NewsList(ListView):
     model = Post
@@ -14,6 +18,7 @@ class NewsList(ListView):
     template_name = 'news_list.html'
     context_object_name = 'news'
     paginate_by = 10
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -69,4 +74,3 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
     model = Post
     template_name = 'news_delete.html'
     success_url = reverse_lazy('news_list')
-
